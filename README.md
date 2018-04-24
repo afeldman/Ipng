@@ -1,28 +1,25 @@
 # Ipng
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/Ipng`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
-
-## Installation
-
-Add this line to your application's Gemfile:
+This small lib makes it possible to store date into an png image. I use chunky_png.
+This library supports openssl encryption if you want to store data in the image safe.
+If the data is set into the image the png can be open in an abitrary image viewer. the  
 
 ```ruby
-gem 'Ipng'
+
+require 'chunky_png'
+
+@image = ChunkyPNG::Image.from_file('spec/img/gentoo_tux.png') 
+
+IPNG.set (@image, 'THIS_IS_A_TAG', 'THIS is a string data')
+IPNG.set_encr(@image, 'THIS_IS_A_DIFFERENT_TAG', 'This is another string', 'key phrase')
+
+IPNG.set_func (@image, 'puts "this is a small ruby evaluation script"')
+
+@image.save('path to the new file')
+
 ```
 
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install Ipng
-
-## Usage
-
-TODO: Write usage instructions here
+There is only one function in the image for the moment. you can extend this usind different tags.
 
 ## Development
 
