@@ -13,26 +13,21 @@ describe IPNG, 'Test IPNG' do
       text = IPNG.get(@image, 'Text1')
       expect(text).to eq('12345')
     end
-
     it 'Test encrypted text' do
       IPNG.set_encr(@image, 'Text2', '12345', 'key')
       text = IPNG.get_dec(@image, 'Text2', 'key')
       expect(text).to eq('12345')
     end
-
-    it 'Test wrong encrypted text' do
-      IPNG.set_encr(@image, 'Text3', '12345', 'key')
-      text = IPNG.get_dec(@image, 'Text3', 'key')
-      expect(text).not_to eq('wrong text')
-    end  
   end
 
   describe 'set function' do
-    
     it 'Set function in image' do
-      IPNG.set_func(@image, 'puts "1"')
-      x = IPNG.eval_func(@image)
-      expect { x }.to eq('1') 
+      IPNG.set_func(@image, 'puts "This is a test"')
+      expect(IPNG.eval_func(@image)).to eq(true) 
+    end
+    it 'Set encrypted function in image' do
+      IPNG.set_func_encr @image, 'puts "This is a encrypted test"', 'test12'
+      expect(IPNG.eval_dec(@image, 'test12')).to eq(true) 
     end
     
   end

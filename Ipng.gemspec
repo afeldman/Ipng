@@ -34,5 +34,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'chunky_png', '~> 1.3'
-  spec.add_development_dependency 'aescrypt'
+  spec.add_development_dependency 'openssl'
 end

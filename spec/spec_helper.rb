@@ -29,7 +29,8 @@ RSpec.configure do |config|
   end
 
   config.fail_fast = true
-
+  config.example_status_persistence_file_path = "spec/.tested"
+  
   # Use color in STDOUT
   config.color = true
 

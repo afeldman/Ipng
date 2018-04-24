@@ -1,26 +1,22 @@
 require 'Ipng/version'
 require 'Ipng/safe_string'
+require 'chunky_png'
 
 module IPNG
-  refine Binding do
-    def method_missing(meth, *args, &block)
-      self.eval(meth.to_s)
-    end
-  end
 
-  def self.set(png_image, tag, str)
+  def self.set png_image, tag, str
     png_image.metadata[tag] = str
   end
 
-  def self.set_func(png_image, func)
+  def self.set_func png_image, func
     set png_image, 'FUNC', func
   end
 
-  def self.set_encr(png_image, tag, str, password)
+  def self.set_encr png_image, tag, str, password
     set png_image, tag, str.encrypt(password)
   end
 
-  def self.set_func_encr(png_image, func, password)
+  def self.set_func_encr png_image, func, password 
     set_encr png_image, 'FUNC', func, password
   end
   
@@ -36,16 +32,23 @@ module IPNG
   end
   
   def self.eval_func (png_image)
-    proc = Proc.new do
-        binding = binding()
-        binding.eval(get png_image, 'FUNC')
+    begin
+      eval get png_image, 'FUNC'
+      return true
+    rescue => e
+      puts e
+      return false
     end
-    
-    proc.call
   end
   
-  def eval_dec (png_image, password)
-     get_dec png_image, 'FUNC', password
-  end
-  
+    def self.eval_dec (png_image, password)
+      begin
+        eval get_dec png_image, 'FUNC', password
+        return true
+      rescue => e
+        puts e
+        return false
+      end
+    end
 end
+
