@@ -35,4 +35,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'chunky_png', '~> 1.3'
   spec.add_development_dependency 'openssl'
+  spec.add_development_dependency 'thor'
+  
 end
